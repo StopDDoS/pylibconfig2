@@ -50,7 +50,7 @@ class _ListType(list):
         )
 
     def _lookup(self, keys):
-        k = self.array_index.parseString(keys.pop(0))[0]
+        k = self.array_index.parseString(str(keys.pop(0)))[0]
         if type(k) == int and k >= 0 and k < len(self):
             val = self[k]
             if not len(keys):
@@ -59,7 +59,7 @@ class _ListType(list):
                 return val._lookup(keys)
                 
     def _setup(self, keys, value):
-        k = self.array_index.parseString(keys.pop(0))[0]
+        k = self.array_index.parseString(str(keys.pop(0)))[0]
         if type(k) == int and k >= 0 and k < len(self):
             if not len(keys):
                 self[k] = self.check_value(value)
@@ -227,7 +227,7 @@ def _check_value(val):
 
 def _check_name(key):
     try:
-        parsing.name.parseString(key)
+        parsing.name.parseString(str(key))
     except parsing.ParseException:
         raise ConfError("Name not valid: %s" % key)
     return key
@@ -337,7 +337,7 @@ class Config(ConfGroup):
         self.read_string(string)
 
     def __init__(self, string=''):
-        res = parsing.config.parseString(string)[0]
+        res = parsing.config.parseString(str(string))[0]
         super(Config, self).__init__(res.__dict__)
 
     def __repr__(self):
